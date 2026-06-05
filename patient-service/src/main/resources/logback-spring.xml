@@ -1,0 +1,32 @@
+<configuration>
+  <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+  <springProperty scope="context" name="serviceName" source="spring.application.name" defaultValue="patient-service"/>
+
+  <appender name="JSON" class="net.logstash.logback.appender.LoggingEventCompositeJsonEncoder">
+  </appender>
+
+  <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+      <providers>
+        <timestamp>
+          <fieldName>timestamp</fieldName>
+        </timestamp>
+        <pattern>
+          <pattern>{"service":"${serviceName}","thread":"%thread","level":"%level","logger":"%logger{36}","message":%message}%n</pattern>
+        </pattern>
+        <mdc>
+          <fieldNames>
+            <mdcFieldName>mdc</mdcFieldName>
+          </fieldNames>
+        </mdc>
+        <stackTrace>
+          <fieldName>exception</fieldName>
+        </stackTrace>
+      </providers>
+    </encoder>
+  </appender>
+
+  <root level="INFO">
+    <appender-ref ref="CONSOLE" />
+  </root>
+</configuration>

@@ -1,0 +1,11 @@
+-- Flyway migration for patient-service
+CREATE TABLE IF NOT EXISTS patients (
+  id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  first_name VARCHAR(100),
+  last_name VARCHAR(100),
+  email VARCHAR(150) NOT NULL UNIQUE,
+  password VARCHAR(200) NOT NULL,
+  phone_number VARCHAR(50),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
